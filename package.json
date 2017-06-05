@@ -1,11 +1,11 @@
 {
   "name": "kirgor-smart-home",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "server": "node server.js"
+    "server": "node server/server.js"
   },
   "dependencies": {
     "express": "^4.15.3",
