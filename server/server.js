@@ -16,4 +16,4 @@ app.get('/api/temperature', (req, res) => {
     res.json(temperatureCache.getPartFrom(from));
 });
 
-app.listen(config.port);
+app.listen(config.port, () => console.log(`Listening on port ${config.port}`));
