@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const config = require('../server.config');
 const temperatureCache = require('./temperature/temperatureCache');
 const temperatureUpdater = require('./temperature/temperatureUpdater');
 
@@ -15,4 +16,4 @@ app.get('/api/temperature', (req, res) => {
     res.json(temperatureCache.getPartFrom(from));
 });
 
-app.listen(3000);
+app.listen(config.port);
