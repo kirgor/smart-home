@@ -12,6 +12,27 @@
 .temperature .chartContainer {
   margin-top: 20px;
 }
+.temperature .chartParameters .title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  display: inline-block;
+}
+.temperature .chartParameters .resolution,
+.temperature .chartParameters .timeSpan {
+  font-size: 13px;
+  margin-left: 20px;
+  display: inline-block;
+}
+.temperature .chartParameters .resolution .label,
+.temperature .chartParameters .timeSpan .label {
+  display: inline-block;
+  margin-right: 10px;
+}
+.temperature .chartParameters .resolution select,
+.temperature .chartParameters .timeSpan select {
+  width: 100px;
+}
 .app {
   min-width: 300px;
   max-width: 800px;

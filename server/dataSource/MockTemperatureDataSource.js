@@ -1,4 +1,4 @@
-const DataSource = require('../DataSource');
+const DataSource = require('./DataSource');
 
 class MockTemperatureDataSource extends DataSource {
     getData() {

@@ -1,8 +1,8 @@
-const DataSource = require('../DataSource');
+const DataSource = require('./DataSource');
 const fs = require('fs');
 const childProcess = require('child_process');
 
-class TemperatureDataSource extends DataSource {
+class RpiTemperatureDataSource extends DataSource {
     /**
      * @param config.deviceFile
      */
@@ -28,4 +28,4 @@ class TemperatureDataSource extends DataSource {
     }
 }
 
-module.exports = TemperatureDataSource;
+module.exports = RpiTemperatureDataSource;
