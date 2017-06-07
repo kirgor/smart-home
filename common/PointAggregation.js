@@ -1,5 +1,6 @@
 const PointAggregation = {
     INSTANT: 1,
+    SECOND: 1000,
     MINUTE: 60 * 1000,
     TEN_MINUTES: 10 * 60 * 1000,
     HOUR: 60 * 60 * 1000,

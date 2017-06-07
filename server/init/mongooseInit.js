@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+const config = require('../../server.config');
+
+mongoose.connect(config.mongoUrl);
 mongoose.Promise = Promise;
 
 console.log('Initialized mongoose');

@@ -1,4 +1,4 @@
-require('./init/temperatureUpdater');
-require('./init/expressApp');
-require('./init/mongoose');
+require('./init/temperatureUpdaterInit');
+require('./init/expressInit');
+require('./init/mongooseInit');
 require('./api/temperatureApi');

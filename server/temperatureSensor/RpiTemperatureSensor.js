@@ -1,22 +1,19 @@
-const DataSource = require('./DataSource');
+const TemperatureSensor = require('./TemperatureSensor');
 const fs = require('fs');
 const childProcess = require('child_process');
 
-class RpiTemperatureDataSource extends DataSource {
-    /**
-     * @param config.deviceFile
-     */
-    constructor(config) {
+class RpiTemperatureSensor extends TemperatureSensor {
+    constructor(deviceFile) {
         super();
-        this.config = config;
+        this.deviceFile = deviceFile;
     }
 
-    initialize() {
+    init() {
         childProcess.execSync('modprobe w1-gpio');
         childProcess.execSync('modprobe w1-therm');
     }
 
-    getData() {
+    getCurrentTemperature() {
         const deviceData = fs.readFileSync(this.config.deviceFile, 'utf8');
         const temperatureData = deviceData.match(/t=\d+/m);
         if (temperatureData.length === 1) {
@@ -28,4 +25,4 @@ class RpiTemperatureDataSource extends DataSource {
     }
 }
 
-module.exports = RpiTemperatureDataSource;
+module.exports = RpiTemperatureSensor;

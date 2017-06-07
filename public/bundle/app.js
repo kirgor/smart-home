@@ -13960,6 +13960,7 @@ exports.default = (0, _redux.createStore)(_reducers2.default);
 
 var PointAggregation = {
     INSTANT: 1,
+    SECOND: 1000,
     MINUTE: 60 * 1000,
     TEN_MINUTES: 10 * 60 * 1000,
     HOUR: 60 * 60 * 1000,
@@ -30978,15 +30979,29 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _autoResolutions;
+
 var _store = __webpack_require__(145);
 
 var _store2 = _interopRequireDefault(_store);
 
 var _actions = __webpack_require__(94);
 
+var _PointAggregation = __webpack_require__(146);
+
+var _PointAggregation2 = _interopRequireDefault(_PointAggregation);
+
+var _TimeSpan = __webpack_require__(701);
+
+var _TimeSpan2 = _interopRequireDefault(_TimeSpan);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var autoResolutions = (_autoResolutions = {}, _defineProperty(_autoResolutions, _TimeSpan2.default.MINUTE, _PointAggregation2.default.SECOND), _defineProperty(_autoResolutions, _TimeSpan2.default.TEN_MINUTES, _PointAggregation2.default.MINUTE), _defineProperty(_autoResolutions, _TimeSpan2.default.HOUR, _PointAggregation2.default.MINUTE), _defineProperty(_autoResolutions, _TimeSpan2.default.THREE_HOURS, _PointAggregation2.default.TEN_MINUTES), _defineProperty(_autoResolutions, _TimeSpan2.default.SIX_HOURS, _PointAggregation2.default.TEN_MINUTES), _defineProperty(_autoResolutions, _TimeSpan2.default.TWELVE_HOURS, _PointAggregation2.default.HOUR), _defineProperty(_autoResolutions, _TimeSpan2.default.DAY, _PointAggregation2.default.HOUR), _autoResolutions);
 
 var TemperatureFetcher = function () {
     function TemperatureFetcher(resolution) {
@@ -31000,6 +31015,7 @@ var TemperatureFetcher = function () {
         value: function startUpdatingCurrent(timeSpan) {
             var _this = this;
 
+            this.timeSpan = timeSpan;
             this.stopUpdatingCurrent();
 
             var update = async function update() {
@@ -31036,7 +31052,8 @@ var TemperatureFetcher = function () {
 
             try {
                 this.fetching = true;
-                var response = await fetch('/api/temperature?from=' + from + '&to=' + to + '&resolution=' + this.resolution);
+                var resolution = this.resolution > 0 ? this.resolution : autoResolutions[this.timeSpan];
+                var response = await fetch('/api/temperature?from=' + from + '&to=' + to + '&resolution=' + resolution);
                 return response.json();
             } finally {
                 this.fetching = false;
@@ -31270,6 +31287,10 @@ var _PointAggregation = __webpack_require__(146);
 
 var _PointAggregation2 = _interopRequireDefault(_PointAggregation);
 
+var _TimeSpan = __webpack_require__(701);
+
+var _TimeSpan2 = _interopRequireDefault(_TimeSpan);
+
 __webpack_require__(570);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31335,6 +31356,11 @@ function Temperature(_ref) {
                         } },
                     _react2.default.createElement(
                         'option',
+                        { value: -1 },
+                        'Auto'
+                    ),
+                    _react2.default.createElement(
+                        'option',
                         { value: _PointAggregation2.default.INSTANT },
                         'Instant'
                     ),
@@ -31375,37 +31401,37 @@ function Temperature(_ref) {
                         } },
                     _react2.default.createElement(
                         'option',
-                        { value: 60 * 1000 },
+                        { value: _TimeSpan2.default.MINUTE },
                         '1 minute'
                     ),
                     _react2.default.createElement(
                         'option',
-                        { value: 10 * 60 * 1000 },
+                        { value: _TimeSpan2.default.TEN_MINUTES },
                         '10 minutes'
                     ),
                     _react2.default.createElement(
                         'option',
-                        { value: 60 * 60 * 1000 },
+                        { value: _TimeSpan2.default.HOUR },
                         '1 hour'
                     ),
                     _react2.default.createElement(
                         'option',
-                        { value: 3 * 60 * 60 * 1000 },
+                        { value: _TimeSpan2.default.THREE_HOURS },
                         '3 hours'
                     ),
                     _react2.default.createElement(
                         'option',
-                        { value: 6 * 60 * 60 * 1000 },
+                        { value: _TimeSpan2.default.SIX_HOURS },
                         '6 hours'
                     ),
                     _react2.default.createElement(
                         'option',
-                        { value: 12 * 60 * 60 * 1000 },
+                        { value: _TimeSpan2.default.TWELVE_HOURS },
                         '12 hours'
                     ),
                     _react2.default.createElement(
                         'option',
-                        { value: 24 * 60 * 60 * 1000 },
+                        { value: _TimeSpan2.default.DAY },
                         '24 hours'
                     )
                 )
@@ -31435,9 +31461,9 @@ var _redux = __webpack_require__(144);
 
 var _utils = __webpack_require__(95);
 
-var _PointAggregation = __webpack_require__(146);
+var _TimeSpan = __webpack_require__(701);
 
-var _PointAggregation2 = _interopRequireDefault(_PointAggregation);
+var _TimeSpan2 = _interopRequireDefault(_TimeSpan);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31449,8 +31475,8 @@ function temperature() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         current: 0,
         history: [],
-        resolution: _PointAggregation2.default.MINUTE,
-        timeSpan: 60 * 60 * 1000
+        resolution: -1,
+        timeSpan: _TimeSpan2.default.DAY
     };
     var action = arguments[1];
 
@@ -63613,6 +63639,29 @@ __webpack_require__(332);
 __webpack_require__(333);
 module.exports = __webpack_require__(331);
 
+
+/***/ }),
+/* 700 */,
+/* 701 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var TimeSpan = {
+    MINUTE: 60 * 1000,
+    TEN_MINUTES: 10 * 60 * 1000,
+    HOUR: 60 * 60 * 1000,
+    THREE_HOURS: 3 * 60 * 60 * 1000,
+    SIX_HOURS: 6 * 60 * 60 * 1000,
+    TWELVE_HOURS: 12 * 60 * 60 * 1000,
+    DAY: 24 * 60 * 60 * 1000
+};
+
+exports.default = TimeSpan;
 
 /***/ })
 /******/ ]);
