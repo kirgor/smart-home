@@ -14,7 +14,7 @@ class RpiTemperatureSensor extends TemperatureSensor {
     }
 
     getCurrentTemperature() {
-        const deviceData = fs.readFileSync(this.config.deviceFile, 'utf8');
+        const deviceData = fs.readFileSync(this.deviceFile, 'utf8');
         const temperatureData = deviceData.match(/t=\d+/m);
         if (temperatureData.length === 1) {
             let t = temperatureData[0].match(/\d+/)[0];
