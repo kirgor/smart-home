@@ -6,6 +6,7 @@ import TimeSpan from './TimeSpan';
 const MAX_HISTORY_POINTS = 100;
 
 function temperature(state = {
+    loading: false,
     current: 0,
     history: [],
     resolution: -1,
@@ -25,6 +26,10 @@ function temperature(state = {
             return {...state, resolution: action.resolution};
         case Actions.SET_TEMPERATURE_TIME_SPAN:
             return {...state, timeSpan: action.timeSpan};
+        case Actions.START_LOADING_TEMPERATURE:
+            return {...state, loading: true};
+        case Actions.STOP_LOADING_TEMPERATURE:
+            return {...state, loading: false};
         default:
             return state;
     }

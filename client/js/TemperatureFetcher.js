@@ -1,5 +1,5 @@
 import store from './store';
-import {setCurrentTemperature, setTemperatureHistory} from './actions';
+import {setCurrentTemperature, setTemperatureHistory, startLoadingTemperature, stopLoadingTemperature} from './actions';
 import PointAggregation from '../../common/PointAggregation';
 import TimeSpan from './TimeSpan';
 
@@ -44,12 +44,14 @@ export default class TemperatureFetcher {
             return;
 
         try {
+            store.dispatch(startLoadingTemperature());
             this.fetching = true;
             const resolution = this.resolution > 0 ? this.resolution : autoResolutions[this.timeSpan];
             const response = await fetch(`/api/temperature?from=${from}&to=${to}&resolution=${resolution}`);
             return response.json();
         } finally {
             this.fetching = false;
+            store.dispatch(stopLoadingTemperature());
         }
     }
 }
